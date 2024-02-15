@@ -23,19 +23,64 @@ def main(page: Page):
         if user_input:
 
             #Add the user message to the message list
-            chat_view.controls.append(Text(value=f"You: {user_input}"))
+            chat_view.controls.append(
+                Container(
+                    content= Column(
+                        spacing=5,
+                        controls=[
+                                Row(
+                                    spacing=5,
+                                    controls=[
+                                    CircleAvatar(
+                                        content=Icon(icons.PERSON),
+                                        scale=0.8,
+                                        bgcolor= colors.BLUE
+                                    ),
+                                    Text(value="User")
+                                ]),
+                                Container(
+                                    padding= padding.only(left=15),
+                                    content= Text(value=f"{user_input}")
+                                )
+                            ]),
+                    margin=margin.only(top= 10)
+                )
+                
+            )
             #Set the TextField to empty when the user sends a message
             txt_input.value = ""
             #Update the page to show instant the message
             page.update()
             
             #Generate a pre response and add it to the message list to get all the message with "\n"
-            pre_response = Text(value="", color= "green")
-            chat_view.controls.append(pre_response)
+            pre_response = Text(value="")
+            chat_view.controls.append(
+                Container(
+                    content= Column(
+                            spacing=5,
+                            controls=[
+                                Row(
+                                    spacing=5,
+                                    controls=[
+                                    CircleAvatar(
+                                        content=Text(value="B"),
+                                        scale=0.8,
+                                        bgcolor= colors.GREEN
+                                    ),
+                                    Text(value="Bot")
+                                ]),
+                                Container(
+                                    padding= padding.only(left=15),
+                                    content= pre_response
+                                )
+                            ]),
+                    margin=margin.only(top= 10)
+                )
+            )
             page.update()
             
             #Create a empty string and concat the response that the ia generate and we can see the response in real time becouse we got the pre response
-            response_text = "Bot: "
+            response_text = ""
             for response_generate in generate(user_input, context):
                 response_text += response_generate + " "
                 pre_response.value = response_text
@@ -44,9 +89,14 @@ def main(page: Page):
 
     #App structure
     chat_view = ListView(expand= True, auto_scroll= True)
-    txt_input = TextField(hint_text="Type your message here", expand= True, autofocus= True, on_submit= send_message, multiline= True)
+    txt_input = TextField(hint_text="Type your message here", expand= True, autofocus= True, on_submit= send_message)
     send_btn = IconButton(icon= icons.SEND, on_click= send_message)
-    input_row = Row([txt_input, send_btn], alignment= alignment.bottom_center)
+    input_row = Container(
+            content= Row(
+            [txt_input, send_btn], 
+            alignment= alignment.bottom_center
+            )
+        )
 
     #Title
     page.title = 'Chat IA Local'

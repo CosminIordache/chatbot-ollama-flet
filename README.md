@@ -2,11 +2,10 @@
   <h1>Ollama + Flet</h1>
 </div>
 
-![example](./img/modelo_de_datos.png)
+![example](./img/example.png)
 
 
 ## Instalation
-##### This is a simple chatbot that is using Ollama and Flet, you can use all the available models but keep in mind the hardware of your computer.
 
 | Model              | Parameters | Size  | Download                       |
 | ------------------ | ---------- | ----- | ------------------------------ |

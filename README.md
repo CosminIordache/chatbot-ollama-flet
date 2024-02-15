@@ -2,7 +2,7 @@
   <h1>Ollama + Flet</h1>
 </div>
 
-![example](./img/example.png)
+![example](./images/example.png)
 
 
 ## Instalation

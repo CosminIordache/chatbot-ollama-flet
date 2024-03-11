@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <h1>Ollama + Flet</h1>
+  <h1>Simple chatbot using Ollama + Flet</h1>
 </div>
 
 ![example](./images/example.png)

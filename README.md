@@ -32,13 +32,17 @@ https://ollama.com/download
 
 Later install the model
 ```bash
-ollama run llama2
+ollama run mistral
 ```
 
-To run the project after install the model, it is necesary to have flet. To install flet, is needed to install a virtual enviroment, we have 2 forms, with venv or with anaconda.
+To run the project after install the model, it is necesary to have the requirements.txt installed.
 ```bash
-pip install flet
+pip install -r requirements.txt
 ```
+
+This chatbot have integrated voice, is using vosk library. The default models that are is in spanish an english. You can change the model in the speech.py file.
+
+![example](./images/voice_change.png)
 
 
 

@@ -17,16 +17,15 @@ def generate(prompt, context, top_k=0, top_p=0.9, temp=0.7):
                 yield response
 
 def main(page: Page):
+
     context = []
 
     def send_message(e):
 
-        global is_recording
-
         if txt_input.value.strip():
             # Get text input
             user_input = txt_input.value.strip()
-        elif audio_bnt.on_focus:
+        elif audio_bnt.on_click:
             # Get audio input
             user_input = audio_user()
 
@@ -99,7 +98,7 @@ def main(page: Page):
 
     #App structure
     chat_view = ListView(expand= True, auto_scroll= True)
-    audio_bnt = IconButton(icon= icons.MIC, on_focus={})
+    audio_bnt = IconButton(icon= icons.MIC, on_click=send_message)
     txt_input = TextField(hint_text="Type your message here", expand= True, autofocus= True, on_submit= send_message)
     send_btn = IconButton(icon= icons.SEND, on_click= send_message)
     input_row = Container(

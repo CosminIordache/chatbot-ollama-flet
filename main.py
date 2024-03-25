@@ -1,9 +1,10 @@
 from flet import *
 import requests
 import json
+from speech import audio_user
 
 #Model use for chat messages
-model = 'llama2:latest'
+model = 'mistral:latest'
 
 #Generate text with a lengague model and do a request to the API that have the model
 def generate(prompt, context, top_k=0, top_p=0.9, temp=0.7):
@@ -19,7 +20,16 @@ def main(page: Page):
     context = []
 
     def send_message(e):
-        user_input = txt_input.value.strip()
+
+        global is_recording
+
+        if txt_input.value.strip():
+            # Get text input
+            user_input = txt_input.value.strip()
+        elif audio_bnt.on_focus:
+            # Get audio input
+            user_input = audio_user()
+
         if user_input:
 
             #Add the user message to the message list
@@ -89,11 +99,12 @@ def main(page: Page):
 
     #App structure
     chat_view = ListView(expand= True, auto_scroll= True)
+    audio_bnt = IconButton(icon= icons.MIC, on_focus={})
     txt_input = TextField(hint_text="Type your message here", expand= True, autofocus= True, on_submit= send_message)
     send_btn = IconButton(icon= icons.SEND, on_click= send_message)
     input_row = Container(
             content= Row(
-            [txt_input, send_btn], 
+            [audio_bnt,txt_input, send_btn], 
             alignment= alignment.bottom_center
             )
         )

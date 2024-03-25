@@ -7,8 +7,8 @@ from speech import audio_user
 model = 'mistral:latest'
 
 #Generate text with a lengague model and do a request to the API that have the model
-def generate(prompt, context, top_k=0, top_p=0.9, temp=0.7):
-    r = requests.post('http://localhost:11434/api/generate', json={'model': model, 'prompt': prompt, 'context': context, 'top_k': top_k, 'top_p': top_p, 'temp': temp}, stream=True)
+def generate(prompt, context, temp= 0):
+    r = requests.post('http://localhost:11434/api/generate', json={'model': model, 'prompt': prompt, 'context': context, 'temp': temp}, stream=True)
     for line in r.iter_lines():
         if line:
             body = json.loads(line.decode('utf-8'))
@@ -26,8 +26,7 @@ def main(page: Page):
             # Get text input
             user_input = txt_input.value.strip()
         elif audio_bnt.on_click:
-            # Get audio input
-            user_input = audio_user()
+            user_input = audio_user(audio_bnt)
 
         if user_input:
 
@@ -48,7 +47,7 @@ def main(page: Page):
                                     Text(value="User")
                                 ]),
                                 Container(
-                                    padding= padding.only(left=15),
+                                    padding= padding.only(left=47),
                                     content= Text(value=f"{user_input}")
                                 )
                             ]),
@@ -79,7 +78,7 @@ def main(page: Page):
                                     Text(value="Bot")
                                 ]),
                                 Container(
-                                    padding= padding.only(left=15),
+                                    padding= padding.only(left=47),
                                     content= pre_response
                                 )
                             ]),
@@ -91,7 +90,7 @@ def main(page: Page):
             #Create a empty string and concat the response that the ia generate and we can see the response in real time becouse we got the pre response
             response_text = ""
             for response_generate in generate(user_input, context):
-                response_text += response_generate + " "
+                response_text += response_generate
                 pre_response.value = response_text
                 #Update the page to show all message 
                 page.update()

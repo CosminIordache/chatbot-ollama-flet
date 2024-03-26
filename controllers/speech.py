@@ -7,7 +7,7 @@ def audio_user(icon_buton : IconButton):
     us = "models/vosk-model-small-en-us-0.15"
     es = "models/vosk-model-small-es-0.42"
 
-    model = Model(es)
+    model = Model(us)
     recognizer = KaldiRecognizer(model, 16000)
 
     mic = pyaudio.PyAudio()

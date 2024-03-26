@@ -1,7 +1,8 @@
 from flet import *
 import requests
 import json
-from speech import audio_user
+from controllers.speech import audio_user
+from controllers.audio import speak
 
 #Model use for chat messages
 model = 'mistral:latest'
@@ -94,6 +95,8 @@ def main(page: Page):
                 pre_response.value = response_text
                 #Update the page to show all message 
                 page.update()
+
+            speak(response_text)
 
     #App structure
     chat_view = ListView(expand= True, auto_scroll= True)
